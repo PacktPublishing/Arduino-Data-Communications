@@ -16,6 +16,6 @@ void loop() {
   WiFiDrv::digitalWrite(blueLED, bitRead(counter, 0));
   WiFiDrv::digitalWrite(greenLED, bitRead(counter, 1));
   WiFiDrv::digitalWrite(redLED, bitRead(counter, 2));
-  counter > 7 ? counter = 0 : counter++;
+  counter > 6 ? counter = 0 : counter++;
   delay(1000);
 }
