@@ -9,6 +9,6 @@ namespace MyEnv {
   float getHumid();
   float getPressure();
   float getLux();
-  JSONVar getJSONReadings();
-  String getReadings(); 
+  JSONVar getJSONReadings(unsigned long unixTime);
+  String getReadings(unsigned long unixTime); 
 }

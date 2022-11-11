@@ -1,8 +1,12 @@
 #include "MyWireless.hpp"
 #include "MyNTPClient.hpp"
 #include "MyEnv.hpp"
+#include "MyClock.hpp"
 
 int status = MyWireless::getIdleStatus(); 
+auto lastMillis = millis();
+const int myDelay = 5000;
+MyClock::MyClock rtc = MyClock::MyClock();
 
 void setup() {
   //Initialize serial and wait for port to open:
@@ -19,7 +23,12 @@ void setup() {
     // wait 10 seconds for connection:
     delay(10000);
   }
-
+  MyNTPClient::initialize();
+  unsigned long currentTime = MyNTPClient::getUnixTime();
+  if(!rtc.initialize(currentTime)) {
+    Serial.println("Unable to initialize the Realtime Clock, aborting ...");
+    while(1);
+  }
   if(!MyEnv::initialize()) {
     Serial.println("Couldn't initialize the ENV Shield, halting");
     while(1);
@@ -31,10 +40,14 @@ void setup() {
   Serial.println("----------------------------------------");
   printData();
   Serial.println("----------------------------------------");
-  MyNTPClient::initialize();
-  Serial.println(MyNTPClient::getUnixTime());
-  Serial.println(MyNTPClient::getTimeFromUnix(MyNTPClient::getUnixTime()));
-  Serial.println(MyEnv::getReadings());
+  Serial.print("NTP Unix Time: ");
+  Serial.println(currentTime);
+  Serial.println(MyNTPClient::getTimeFromUnix(currentTime));
+  Serial.print("RTC Unix Time: ");
+  Serial.println(rtc.getEpochs());
+  Serial.println(rtc.getWATDateTime());
+  lastMillis = millis();
+  Serial.println(MyEnv::getReadings(currentTime));
 }
 
 void loop() {
