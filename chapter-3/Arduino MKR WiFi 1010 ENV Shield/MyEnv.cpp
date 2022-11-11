@@ -24,8 +24,9 @@ namespace MyEnv {
     return ENV.readIlluminance();
   }
 
-  JSONVar getJSONReadings() {
+  JSONVar getJSONReadings(unsigned long unixTime) {
     JSONVar readings;
+    readings["unixTime"] = unixTime;
     readings["temperature"] = getTemp();
     readings["humidity"] = getHumid();
     readings["pressure"] = getPressure();
@@ -33,8 +34,8 @@ namespace MyEnv {
     return readings;
   }
 
-  String getReadings() {
-    JSONVar readings = getJSONReadings();
+  String getReadings(unsigned long unixTime) {
+    JSONVar readings = getJSONReadings(unixTime);
     return JSON.stringify(readings);
   }
 }
