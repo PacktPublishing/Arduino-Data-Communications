@@ -24,11 +24,12 @@ void setup() {
     delay(10000);
   }
   MyNTPClient::initialize();
+
+  unsigned long currentTime = MyNTPClient::getUnixTime();
   if(!rtc.initialize(currentTime)) {
     Serial.println("Unable to initialize the Realtime Clock, aborting ...");
     while(1);
   }
-  unsigned long currentTime = MyNTPClient::getUnixTime();
   if(!MyEnv::initialize()) {
     Serial.println("Couldn't initialize the ENV Shield, halting");
     while(1);
