@@ -16,11 +16,16 @@ String appKey = SECRET_APP_KEY;
 void setup() {
   
   Serial.begin(115200);
+  while(!Serial);
   while (!ENV.begin()) {
     Serial.println("Failed to initialize ENV Shield, waiting ...");
     delay(10000);
   }
   Serial.println("Initialized ENV Shield");
+  if (!modem.begin(US915)) {
+    Serial.println("Failed to start module");
+    while (true);
+  };
   int connected = modem.joinOTAA(appEui, appKey);
   if (!connected) {
     Serial.println("Unable to initialize modem connection");
@@ -28,6 +33,7 @@ void setup() {
   }
   // Set poll interval to 60 secs.
   modem.minPollInterval(60);
+  Serial.println("Ready ...");
 }
 
 
