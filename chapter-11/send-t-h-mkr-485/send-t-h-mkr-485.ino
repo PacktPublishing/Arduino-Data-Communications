@@ -7,14 +7,11 @@ float t,h;
 const int stationId = 1;
 
 void setup() {
-  Serial.begin(9600);
   while (!ENV.begin()) {
     Serial.println("Failed to initialize ENV Shield, waiting ...");
     delay(10000);
   }
-  Serial.println("Initialized ENV Shield");
   RS485.begin(9600);
-  Serial.println("Ready ...");
 }
 
 void loop() {
@@ -27,7 +24,5 @@ void loop() {
     RS485.beginTransmission();
     RS485.println(msg);
     RS485.endTransmission();
-    
-    Serial.println(msg);
   }
 }
