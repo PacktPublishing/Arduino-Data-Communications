@@ -1,5 +1,0 @@
-#define SECRET_APN "web.gprs.mtnnigeria.net"
-#define SECRET_USER "web"
-#define SECRET_PASS "web"
-#define SECRET_SERVER "webhook.site"
-#define SECRET_PATH "/7f5b8f0c-5f17-4639-aa81-64d0ea33d4be"
